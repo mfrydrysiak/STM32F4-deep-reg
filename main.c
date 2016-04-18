@@ -44,6 +44,12 @@ void pushBtnLedON()
 }
 ////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////
+void EXTI0_IRQHandler()
+{
+	pushBtnLedON();
+}
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
 int main()
 {
 	myClockConfig(); 	// AHB  = 180 MHz
@@ -53,6 +59,7 @@ int main()
 	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOBEN;	// GPIOB
 	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOGEN;	// GPIOG
 	RCC->APB1ENR |= RCC_APB1ENR_TIM4EN;		// TIM4
+	RCC->APB2ENR |= RCC_APB2ENR_SYSCFGEN;	// SYSCFG
 	
 	/* PA0: input, pull-down mode */
 	GPIOA->PUPDR |= GPIO_PUPDR_PUPDR0_1;	
@@ -65,24 +72,40 @@ int main()
 	/* PG13: general purpose output mode */
 	GPIOG->MODER |= GPIO_MODER_MODER13_0;
 
-	/* TIM4 configuration 		*/
+	/*----------------------------------*/
+	/* External interrupt configuration */
+	/* Select the source input for the EXTI0 external interrupt (PA0) */
+	SYSCFG->EXTICR[0] |= SYSCFG_EXTICR1_EXTI0_PA;
+	
+	/* Unmask an interrupt request from line (PA)0 */
+	EXTI->IMR |= EXTI_IMR_MR0;
+	
+	/* Rising trigger enabled (for Event and Interrupt) for input line */
+	EXTI->RTSR |= EXTI_RTSR_TR0;
+	
+	/* Enable NVIC interrupt request */
+	NVIC_EnableIRQ(EXTI0_IRQn);
+	/*----------------------------------*/
+	
+	/*------------------------*/
+	/* TIM4 configuration     */
 	/* Set the TIM4 prescaler */
 	/* 45MHz / 4500 = 10kHz 	*/
 	TIM4->PSC = 45 - 1;
 	
 	TIM4->ARR = 10000 - 1; 			// determines the frequency		
-	TIM4->CCR1 = 200 ;			
+	TIM4->CCR1 = 500 ;			
 	TIM4->CCMR1 |= (TIM_CCMR1_IC1F_1 | TIM_CCMR1_IC1F_2);
 	TIM4->CCMR1 |= TIM_CCMR1_IC1PSC_1;
 	TIM4->CR1 |= TIM_CR1_ARPE;
 	TIM4->EGR |= TIM_EGR_UG;
 	TIM4->CCER |= TIM_CCER_CC1E;
 	TIM4->CR1 |= TIM_CR1_CEN;
-	/*------------------------*/
+	/*--------------------*/
 
 	while(1)
 	{
-		pushBtnLedON();
+
 	}
 }
 

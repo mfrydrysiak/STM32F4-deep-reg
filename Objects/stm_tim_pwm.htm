@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\stm_tim_pwm.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\stm_tim_pwm.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060061: Last Updated: Mon Apr 18 22:08:31 2016
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060061: Last Updated: Mon Apr 18 22:40:17 2016
 <BR><P>
 <H3>Maximum Stack Usage =          8 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -64,7 +64,7 @@ Function Pointers
  <LI><a href="#[9]">DebugMon_Handler</a> from startup_stm32f429xx.o(.text) referenced from startup_stm32f429xx.o(RESET)
  <LI><a href="#[49]">ETH_IRQHandler</a> from startup_stm32f429xx.o(.text) referenced from startup_stm32f429xx.o(RESET)
  <LI><a href="#[4a]">ETH_WKUP_IRQHandler</a> from startup_stm32f429xx.o(.text) referenced from startup_stm32f429xx.o(RESET)
- <LI><a href="#[12]">EXTI0_IRQHandler</a> from startup_stm32f429xx.o(.text) referenced from startup_stm32f429xx.o(RESET)
+ <LI><a href="#[12]">EXTI0_IRQHandler</a> from main.o(i.EXTI0_IRQHandler) referenced from startup_stm32f429xx.o(RESET)
  <LI><a href="#[34]">EXTI15_10_IRQHandler</a> from startup_stm32f429xx.o(.text) referenced from startup_stm32f429xx.o(RESET)
  <LI><a href="#[13]">EXTI1_IRQHandler</a> from startup_stm32f429xx.o(.text) referenced from startup_stm32f429xx.o(RESET)
  <LI><a href="#[14]">EXTI2_IRQHandler</a> from startup_stm32f429xx.o(.text) referenced from startup_stm32f429xx.o(RESET)
@@ -425,9 +425,6 @@ Global Symbols
 <P><STRONG><a name="[4a]"></a>ETH_WKUP_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_stm32f429xx.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f429xx.o(RESET)
 </UL>
-<P><STRONG><a name="[12]"></a>EXTI0_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_stm32f429xx.o(.text))
-<BR>[Address Reference Count : 1]<UL><LI> startup_stm32f429xx.o(RESET)
-</UL>
 <P><STRONG><a name="[34]"></a>EXTI15_10_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_stm32f429xx.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f429xx.o(RESET)
 </UL>
@@ -653,24 +650,30 @@ Global Symbols
 
 <P><STRONG><a name="[a7]"></a>__use_no_semihosting_swi</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, use_no_semi.o(.text), UNUSED)
 
-<P><STRONG><a name="[a8]"></a>__semihosting_library_function</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, indicate_semi.o(.text), UNUSED)
+<P><STRONG><a name="[12]"></a>EXTI0_IRQHandler</STRONG> (Thumb, 8 bytes, Stack size 4 bytes, main.o(i.EXTI0_IRQHandler))
+<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = EXTI0_IRQHandler
+</UL>
+<BR>[Calls]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pushBtnLedON
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> startup_stm32f429xx.o(RESET)
+</UL>
+<P><STRONG><a name="[a8]"></a>__semihosting_library_function</STRONG> (Thumb, 0 bytes, Stack size 4 bytes, indicate_semi.o(.text), UNUSED)
 
 <P><STRONG><a name="[66]"></a>SystemInit</STRONG> (Thumb, 82 bytes, Stack size 0 bytes, system_stm32f4xx.o(i.SystemInit))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f429xx.o(.text)
 </UL>
-<P><STRONG><a name="[75]"></a>main</STRONG> (Thumb, 224 bytes, Stack size 0 bytes, main.o(i.main))
-<BR><BR>[Calls]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pushBtnLedON
-<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;myClockConfig
+<P><STRONG><a name="[75]"></a>main</STRONG> (Thumb, 290 bytes, Stack size 0 bytes, main.o(i.main))
+<BR><BR>[Calls]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;myClockConfig
 </UL>
 <BR>[Called By]<UL><LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
 </UL>
 
-<P><STRONG><a name="[7d]"></a>myClockConfig</STRONG> (Thumb, 108 bytes, Stack size 0 bytes, main.o(i.myClockConfig))
+<P><STRONG><a name="[7e]"></a>myClockConfig</STRONG> (Thumb, 108 bytes, Stack size 0 bytes, main.o(i.myClockConfig))
 <BR><BR>[Called By]<UL><LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[7e]"></a>pushBtnLedON</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, main.o(i.pushBtnLedON))
-<BR><BR>[Called By]<UL><LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<P><STRONG><a name="[7d]"></a>pushBtnLedON</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, main.o(i.pushBtnLedON))
+<BR><BR>[Called By]<UL><LI><a href="#[12]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI0_IRQHandler
 </UL>
 
 <P><STRONG><a name="[6f]"></a>_fp_init</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, fpinit.o(x$fpl$fpinit))
